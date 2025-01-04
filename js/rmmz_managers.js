@@ -103,14 +103,11 @@ DataManager.loadDatabase = function() {
 };
 
 DataManager.loadDataFile = function(name, src) {
-    const xhr = new XMLHttpRequest();
-    const url = "data/" + src;
-    window[name] = null;
-    xhr.open("GET", url);
-    xhr.overrideMimeType("application/json");
-    xhr.onload = () => this.onXhrLoad(xhr, name, src, url);
-    xhr.onerror = () => this.onXhrError(name, src, url);
-    xhr.send();
+    const url = "data\\" + src;
+    console.log({name,url})
+    const fs = require("fs");
+    window[name] = JSON.parse(fs.readFileSync(url));
+    this.onLoad(window[name]);
 };
 
 DataManager.onXhrLoad = function(xhr, name, src, url) {

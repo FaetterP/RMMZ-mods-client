@@ -367,7 +367,7 @@ Scene_Boot.prototype.adjustWindow = function() {
 };
 
 Scene_Boot.prototype.updateDocumentTitle = function() {
-    document.title = $dataSystem.gameTitle;
+    document.title = $dataSystem.gameTitle + " (modded)";
 };
 
 Scene_Boot.prototype.checkPlayerLocation = function() {

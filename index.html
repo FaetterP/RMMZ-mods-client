@@ -1,16 +1,138 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <meta name="viewport" content="user-scalable=no">
-        <link rel="icon" href="icon/icon.png" type="image/png">
-        <link rel="apple-touch-icon" href="icon/icon.png">
-        <link rel="stylesheet" type="text/css" href="css/game.css">
-        <title>DST V. 1.4</title>
-    </head>
-    <body style="background-color: black">
-        <script type="text/javascript" src="js/main.js"></script>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="user-scalable=no" />
+    <link rel="icon" href="icon/icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="icon/icon.png" />
+    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <title>Initializing mods...</title>
+    <style>
+      body {
+        background-color: black;
+        font-family: Arial, sans-serif;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      ul[name="mods-logs"] {
+        list-style-type: none;
+        padding: 0;
+        width: 100%;
+        max-width: 900px;
+        margin: 10px 0;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: fixed;
+        top: 10px;
+        scrollbar-width: none;
+      }
+
+      ul[name="mods-logs"]::-webkit-scrollbar {
+        display: none;
+      }
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        transition: opacity 0.3s ease;
+      }
+
+      .log-error {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: #ff4c4c;
+        border-left: 5px solid #ff4c4c;
+      }
+
+      .log-success {
+        background-color: rgba(0, 255, 0, 0.1);
+        color: #00e676;
+        border-left: 5px solid #00e676;
+      }
+
+      .log-message {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #e0e0e0;
+        border-left: 5px solid #ffffff;
+      }
+
+      .log-icon {
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      li.new-log {
+        opacity: 0;
+        animation: fadeIn 0.5s forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+
+      </script>
+
+    <ul name="mods-logs"></ul>
+    <script>
+      function addLog(text, type) {
+       setTimeout(()=>{
+        const ul = document.querySelector("body > ul");
+        const li = document.createElement("li");
+        li.classList.add("new-log");
+
+        const now = new Date();
+        const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+        const timeString = `${now.toLocaleTimeString()}:${milliseconds}`;
+
+        li.textContent = `[${timeString}] ${text}`;
+
+        const icon = document.createElement("span");
+        icon.classList.add("log-icon");
+
+        switch (type) {
+          case "error":
+            li.classList.add("log-error");
+            icon.textContent = "⛔";
+            break;
+          case "success":
+            li.classList.add("log-success");
+            icon.textContent = "✅";
+            break;
+          default:
+            li.classList.add("log-message");
+            icon.textContent = "ℹ️";
+        }
+
+        li.prepend(icon);
+        ul.appendChild(li);
+        ul.scrollTop = ul.scrollHeight;
+       },0)
+      }
+
+      function removeLog() {
+        const ul = document.querySelector("body > ul");
+        if (ul) ul.remove();
+      }
+    </script>
+    <script type="text/javascript" src="js/patch.js"></script>
+  </body>
 </html>

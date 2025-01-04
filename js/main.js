@@ -48,10 +48,7 @@ class Main {
     }
 
     testXhr() {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", document.currentScript.src);
-        xhr.onload = () => (this.xhrSucceeded = true);
-        xhr.send();
+        this.xhrSucceeded = true
     }
 
     loadMainScripts() {
@@ -67,8 +64,11 @@ class Main {
             document.body.appendChild(script);
         }
         this.numScripts = scriptUrls.length;
-        window.addEventListener("load", this.onWindowLoad.bind(this));
-        window.addEventListener("error", this.onWindowError.bind(this));
+
+        setTimeout(()=>{
+            removeLog();
+            this.onWindowLoad();
+        },2000)
     }
 
     onScriptLoad() {
@@ -102,17 +102,7 @@ class Main {
     }
 
     onWindowLoad() {
-        if (!this.xhrSucceeded) {
-            const message = "Your browser does not allow to read local files.";
-            this.printError("Error", message);
-        } else if (this.isPathRandomized()) {
-            const message = "Please move the Game.app to a different folder.";
-            this.printError("Error", message);
-        } else if (this.error) {
-            this.printError(this.error.name, this.error.message);
-        } else {
-            this.initEffekseerRuntime();
-        }
+        return this.initEffekseerRuntime();
     }
 
     onWindowError(event) {
