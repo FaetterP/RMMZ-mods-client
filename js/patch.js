@@ -1,7 +1,6 @@
 const fs = require('fs');
-const { fs: memfs } = require('memfs');
+const { memfs, diff } = require('./js/packages');
 const path = require('path');
-const diff = require('diff');
 const fsWrapper = require('./js/fs_wrapper');
 
 const dataDir = "./data";
@@ -36,7 +35,7 @@ async function processMods() {
             const finalFilePath = path.join(finalDir, filename);
             let finalData = JSON.stringify(JSON.parse(fsWrapper.readFileSync(finalFilePath, 'utf-8')), null, 2);
             const modFilePath = path.join(modDirPath, "data", filename);
- 
+
             if (fs.existsSync(modFilePath)) {
                 addLog(`[${modDirName}] Updating ${filename.replace(/\.[^.]*$/, '')}`);
                 const modData = JSON.stringify(JSON.parse(fs.readFileSync(modFilePath, 'utf-8')), null, 2);

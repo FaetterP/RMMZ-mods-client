@@ -1,11 +1,11 @@
-const memfs = require('memfs').fs;
+const { memfs } = require('./packages');
 const realFs = require('fs');
 const path = require('path');
 
 function readFileSync(filepath, options) {
     console.log({ path: filepath })
     try {
-        console.log({filepath, options})
+        console.log({ filepath, options })
         return memfs.readFileSync(filepath, options);
     } catch (err) {
         if (err.code === 'ENOENT') {
